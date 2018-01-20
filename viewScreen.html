@@ -73,15 +73,18 @@
                     break;
                   }
                 }
+
+                var varName = func.substring(start, end);
+                //Check for special operators
+                if (specialOperators.indexOf(varName) == -1) {
+                  vars.push([varName, null]);
+                }
+
+                i += end - start + 1;
+              } else {
+                i++;
               }
 
-              var varName = func.substring(start, end);
-              //Check for special operators
-              if (specialOperators.indexOf(varName) == -1) {
-                vars.push([varName, null]);
-              }
-
-              i += end - start + 1;
             }
 
             //Splice out spaces
