@@ -5,10 +5,6 @@ const url = require('url');           // https://nodejs.org/api/url.html
 let window = null;
 let bgWindow = null;
 
-ipcMain.on('screen:add', function(e, eventName, year) {
-  window.loadURL('file://' + __dirname + '/addScreen.html');
-});
-
 // Wait until the app is ready
 app.once('ready', () => {
   // Create a new window
@@ -47,4 +43,19 @@ app.once('ready', () => {
   window.on('closed', function() {
     app.quit();
   });
+});
+
+ipcMain.on('screen:add', function(e) {
+  window.loadURL('file://' + __dirname + '/addScreen.html');
+});
+
+ipcMain.on('screen:main', function(e) {
+  window.loadURL('file://' + __dirname + '/popup.html');
+});
+
+//Functions handling
+var functions = [];
+ipcMain.on('function:add', function(e, functionName, func) {
+  console.log("function added");
+  functions.push([functionName, func]);
 });

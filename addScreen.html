@@ -39,6 +39,10 @@
           document.querySelector('#func').value = "";
         }
       }
+
+      function done(e) {
+        ipcRenderer.send('screen:main');
+      }
     </script>
   </body>
 </html>
