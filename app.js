@@ -84,10 +84,6 @@ ipcMain.on('function:get', function(event, search) {
 });
 
 ipcMain.on('function:calc', function(event, formula, vars) {
-  //SUBSTITUTE VARIABLES IN
-  
-
-
   //ACTUAL CALCULATION
   var operations = ["+", "-", "/", "*", "^"];
 
@@ -194,11 +190,25 @@ ipcMain.on('function:calc', function(event, formula, vars) {
         }
 
         console.log("opindex: " + opIndex);
+
         var leftNum = formula.substring(closestLeftIndex + 1, opIndex);
         console.log("leftnum before parse: " + leftNum);
+        for (var j = 0; j < vars.length; j++) {
+          if (vars[j][0] == leftNum) {
+            leftNum = vars[j][1];
+            break;
+          }
+        }
         var leftNum = parseFloat(leftNum);
+
         var rightNum = formula.substring(opIndex + 1, closestRightIndex);
         console.log("rightnum before parse: " + rightNum);
+        for (var j = 0; j < vars.length; j++) {
+          if (vars[j][0] == rightNum) {
+            rightNum = vars[j][1];
+            break;
+          }
+        }
         var rightNum = parseFloat(rightNum);
 
         console.log("TEST: " + leftNum + " and " + rightNum);

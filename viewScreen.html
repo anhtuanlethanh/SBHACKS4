@@ -36,6 +36,8 @@
       </form>
     </div>
 
+    <div id="varsDiv"></div>
+
     <script>
       const {ipcRenderer} = require('electron');
 
@@ -83,16 +85,29 @@
             }
 
             //Splice out spaces
-            for (var k = 0; k < vars.length; k++) {
-              vars[k][0] = vars[k][0].replace(/\s/g, '');
-              if (vars[k][0].length == 0) {
-                vars.splice(k, 1);
-                k--;
+            for (var i = 0; i < vars.length; i++) {
+              vars[i][0] = vars[i][0].replace(/\s/g, '');
+              if (vars[i][0].length == 0) {
+                vars.splice(i, 1);
+                i--;
               }
             }
 
             //Create interface for entering variables
+            for (var i = 0; i < vars.length; i++) {
+              var newDiv = document.createElement("div");
+              var newContent = document.createTextNode(vars[i][0]);
+              newDiv.appendChild(newContent);
 
+              var input = document.createElement("input");
+              input.type = "text";
+              input.className = "css-class-name";
+              input.id = "varValue" + i;
+              newDiv.append(input);
+
+              var currentDiv = document.getElementById("varsDiv");
+              document.body.insertBefore(newDiv, currentDiv);
+            }
           } else {
             document.querySelector('#formula').value = "Not found!";
           }
@@ -105,6 +120,11 @@
       }
 
       function calculate() {
+        for (var i = 0; i < vars.length; i++) {
+          vars[i][1] = document.querySelector('#varValue'+i).value;
+          console.log("var " + i + ": " + vars[i][0] + " = " + vars[i][1]);
+        }
+
         var output = ipcRenderer.sendSync('function:calc', viewedFormula[1], vars);
         document.querySelector('#output').value = output;
       }
