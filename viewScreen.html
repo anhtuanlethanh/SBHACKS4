@@ -18,13 +18,20 @@
         <button class="btn waves-effect waves-red"
                 type="button"
                 onclick="done()">Done</button>
+        <button class="btn waves-effect waves-red"
+                type="button"
+                onclick="calculate()">Calculate</button>
         <!--<div>
           <label>Formula Name</label>
           <input type="text" id="fName">
         </div>-->
         <div>
           <label>Formula</label>
-          <input type="text" id="formula">
+          <output type="text" id="formula">
+        </div>
+        <div>
+          <label>Output</label>
+          <output type="text" id="output">
         </div>
       </form>
     </div>
@@ -33,6 +40,8 @@
       const {ipcRenderer} = require('electron');
 
       const form = document.querySelector('form');
+
+      var viewedFormula = [];
 
       function viewFormula() {
         var search = document.querySelector('#search').value;
@@ -43,6 +52,7 @@
           if (formula != null) {
             //document.querySelector('#fName').value = formula[0];
             document.querySelector('#formula').value = formula[1];
+            viewedFormula = formula;
           } else {
             document.querySelector('#formula').value = "Not found!";
           }
@@ -52,6 +62,11 @@
       function done() {
         ipcRenderer.send('screen:main');
         console.log('Done with the view screen');
+      }
+
+      function calculate() {
+        var output = ipcRenderer.sendSync('function:calc', viewedFormula[1], null);
+        document.querySelector('#output').value = output;
       }
     </script>
   </body>
