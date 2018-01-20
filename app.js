@@ -84,6 +84,11 @@ ipcMain.on('function:get', function(event, search) {
 });
 
 ipcMain.on('function:calc', function(event, formula, vars) {
+  //SUBSTITUTE VARIABLES IN
+  
+
+
+  //ACTUAL CALCULATION
   var operations = ["+", "-", "/", "*", "^"];
 
   var innerOperations = [];
@@ -122,9 +127,47 @@ ipcMain.on('function:calc', function(event, formula, vars) {
       if (formula[i] == ")") {
         //IF THERE ARE NO OPERATIONS WITHIN THE PARENS, JUST remove the parens
         if (innerOperations.length == 0) {
-          formula = formula.substring(0, leftParen) + formula.substring(leftParen + 1, i) + formula.substring(i + 1);
-          console.log("parens removed: " + formula);
-          break;
+          var within = formula.substring(leftParen + 1, i);
+
+          //If there is a tan/sin/cos whatever
+          var specialOperators = ["sin", "cos", "tan"];
+          var specOp = formula.substring(leftParen - 3, leftParen);
+          if (specialOperators.indexOf(specOp) != -1) {
+            var result;
+            var len = 3;
+
+            if (formula[leftParen - 4] == "a") {
+              specOp = "a" + specOp;
+              len = 4;
+            }
+            if (specOp == "sin") {
+              result = Math.sin(parseFloat(formula.substring(leftParen + 1, i)));
+            }
+            if (specOp == "cos") {
+              result = Math.cos(parseFloat(formula.substring(leftParen + 1, i)));
+            }
+            if (specOp == "tan") {
+              result = Math.tan(parseFloat(formula.substring(leftParen + 1, i)));
+            }
+            if (specOp == "asin") {
+              result = Math.asin(parseFloat(formula.substring(leftParen + 1, i)));
+            }
+            if (specOp == "acos") {
+              result = Math.acos(parseFloat(formula.substring(leftParen + 1, i)));
+            }
+            if (specOp == "atan") {
+              result = Math.atan(parseFloat(formula.substring(leftParen + 1, i)));
+            }
+
+            formula = formula.substring(0, leftParen - len) + result + formula.substring(i + 1);
+
+            break;
+          } else {
+            //If there is no function
+            formula = formula.substring(0, leftParen) + formula.substring(leftParen + 1, i) + formula.substring(i + 1);
+            console.log("parens removed: " + formula);
+            break;
+          }
         }
 
         //Find the highest priority operation
@@ -196,7 +239,7 @@ ipcMain.on('function:calc', function(event, formula, vars) {
 
 function getOpCount(operations, formula) {
   var opCount = 0;
-  
+
   for (var i = 0; i < formula.length; i++) {
     if (operations.indexOf(formula[i]) != -1) {
       //Check if it's a negative vs subtraction
@@ -210,5 +253,13 @@ function getOpCount(operations, formula) {
       }
     }
   }
+
+  var specialOperators = ["sin", "cos", "tan"];
+  for (var i = 0; i < specialOperators.length; i++) {
+    if (formula.indexOf(specialOperators[i]) != -1) {
+      opCount++;
+    }
+  }
+
   return opCount;
 }

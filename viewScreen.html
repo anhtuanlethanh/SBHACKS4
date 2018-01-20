@@ -50,9 +50,10 @@
 
           formula = ipcRenderer.sendSync('function:get', search);
           if (formula != null) {
-            //document.querySelector('#fName').value = formula[0];
             document.querySelector('#formula').value = formula[1];
             viewedFormula = formula;
+
+            
           } else {
             document.querySelector('#formula').value = "Not found!";
           }
