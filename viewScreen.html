@@ -49,6 +49,7 @@
 
       function viewFormula() {
         var search = document.querySelector('#search').value;
+        vars = [];
         if (search.length != 0) {
           var formula = ["UNSET", "UNSET"];
 
@@ -97,8 +98,22 @@
             }
 
             //Create interface for entering variables
+            /*if (document.getElementById("holder") != null) {
+              document.getElementById("holder").innerHTML = '';
+            }*/
+            /*if (document.getElementById("varsDiv") != null) {
+              while (document.getElementById("varsDiv").firstChild) {
+                console.log("one removal");
+                document.getElementById("varsDiv").removeChild(document.getElementById("varsDiv").firstChild);
+              }
+            }*/
+            while (document.getElementById("holder")) {
+              document.getElementById("holder").remove();
+            }
+
             for (var i = 0; i < vars.length; i++) {
               var newDiv = document.createElement("div");
+              newDiv.id = "holder";
               var newContent = document.createTextNode(vars[i][0]);
               newDiv.appendChild(newContent);
 
