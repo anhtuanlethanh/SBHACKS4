@@ -9,8 +9,8 @@
     <div class="container">
       <form>
         <div>
-          <label>Formula Index</label>
-          <input type="text" id="index" autofocus>
+          <label>Search Formula</label>
+          <input type="text" id="search" autofocus>
         </div>
         <button class="btn waves-effect waves-red"
                 type="button"
@@ -18,10 +18,10 @@
         <button class="btn waves-effect waves-red"
                 type="button"
                 onclick="done()">Done</button>
-        <div>
+        <!--<div>
           <label>Formula Name</label>
           <input type="text" id="fName">
-        </div>
+        </div>-->
         <div>
           <label>Formula</label>
           <input type="text" id="formula">
@@ -35,17 +35,17 @@
       const form = document.querySelector('form');
 
       function viewFormula() {
-        var index = document.querySelector('#index').value;
-        if (index.length != 0) {
-          index = parseInt(index);
-          console.log("some index was entered");
+        var search = document.querySelector('#search').value;
+        if (search.length != 0) {
           var formula = ["UNSET", "UNSET"];
 
-          formula = ipcRenderer.sendSync('function:get', index);
-          document.querySelector('#fName').value = formula[0];
-          document.querySelector('#formula').value = formula[1];
-
-          document.querySelector('#index').value = "";
+          formula = ipcRenderer.sendSync('function:get', search);
+          if (formula != null) {
+            //document.querySelector('#fName').value = formula[0];
+            document.querySelector('#formula').value = formula[1];
+          } else {
+            document.querySelector('#formula').value = "Not found!";
+          }
         }
       }
 

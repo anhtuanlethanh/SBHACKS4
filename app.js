@@ -61,9 +61,24 @@ app.once('ready', () => {
 //Functions handling
 var formulas = [];
 ipcMain.on('function:add', function(e, formulaName, func) {
-  formulas.push([formulaName, func]);
+  var duplicate = false;
+  for (var i = 0; i < formulas.length; i++) {
+    if (formulas[i][0] == formulaName) {
+      duplicate = true;
+    }
+  }
+  if (!duplicate) {
+    formulas.push([formulaName, func]);
+  } else {
+    console.log("Duplicate formula name!");
+  }
 });
 
-ipcMain.on('function:get', function(event, index) {
-  event.returnValue = formulas[index];
+ipcMain.on('function:get', function(event, search) {
+  for (var i = 0; i < formulas.length; i++) {
+    if (formulas[i][0] == search) {
+      event.returnValue = formulas[i];
+    }
+  }
+  event.returnValue = null;
 });
