@@ -3,12 +3,17 @@ const path = require('path');         // https://nodejs.org/api/path.html
 const url = require('url');           // https://nodejs.org/api/url.html
 
 let window = null;
+let bgWindow = null;
+
 
 ipcMain.on('screen:Add', function(e, eventName, year) {
   window.loadURL('file://' + __dirname + '/addScreen.html');
 });
 ipcMain.on('screen:View', function(e, eventName, year) {
   window.loadURL('file://' + __dirname + '/viewScreen.html');
+});
+ipcMain.on('screen:main', function(e) {
+  window.loadURL('file://' + __dirname + '/popup.html');
 });
 
 // Wait until the app is ready
@@ -34,4 +39,28 @@ app.once('ready', () => {
   window.once('ready-to-show', () => {
     window.show()
   });
+
+  bgWindow = new BrowserWindow({
+    width: 200,
+    height: 200,
+    show: false
+  });
+  bgWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'bg.html'),
+    protocol: 'file:',
+    slashes: true
+  }));
+
+  window.on('closed', function() {
+    app.quit();
+  });
+});
+
+
+
+//Functions handling
+var functions = [];
+ipcMain.on('function:add', function(e, functionName, func) {
+  console.log("function added");
+  functions.push([functionName, func]);
 });

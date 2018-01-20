@@ -9,22 +9,41 @@
     <div class="container">
       <form>
         <div>
-          <label>Event Name</label>
-          <input type="text" id="event" autofocus>
+          <label>Formula Name</label>
+          <input type="text" id="formula_name" autofocus>
         </div>
         <div>
-          <label>Date</label>
-          <input type="date" id="year" autofocus>
+          <label>Formula</label>
+          <input type="text" id="func" autofocus>
         </div>
         <button class="btn waves-effect waves-red"
                 type="button"
-                onclick="validSubmit()">Add Entry</button>
+                onclick="submitFunction()">Add Function</button>
         <button class="btn waves-effect waves-red"
                 type="button"
                 onclick="done()">Done</button>
       </form>
     </div>
 
-    <script></script>
+    <script>
+      const {ipcRenderer} = require('electron');
+
+      const form = document.querySelector('form');
+
+      function submitFunction(e) {
+        const formulaName = document.querySelector('#formula_name').value;
+        const func = document.querySelector('#func').value;
+        if (formulaName.length != 0 && func.length != 0) {
+          ipcRenderer.send('function:add', formulaName, func);
+          document.querySelector('#formula_name').value = "";
+          document.querySelector('#func').value = "";
+        }
+      }
+
+      function done(e) {
+        ipcRenderer.send('screen:main');
+        console.log('Done with the add screen');
+      }
+    </script>
   </body>
 </html>
