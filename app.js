@@ -3,6 +3,7 @@ const path = require('path');         // https://nodejs.org/api/path.html
 const url = require('url');           // https://nodejs.org/api/url.html
 
 let window = null;
+let bgWindow = null;
 
 ipcMain.on('screen:add', function(e, eventName, year) {
   window.loadURL('file://' + __dirname + '/addScreen.html');
@@ -30,5 +31,20 @@ app.once('ready', () => {
   // Show window when page is ready
   window.once('ready-to-show', () => {
     window.show()
+  });
+
+  bgWindow = new BrowserWindow({
+    width: 200,
+    height: 200,
+    show: false
+  });
+  bgWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'bg.html'),
+    protocol: 'file:',
+    slashes: true
+  }));
+
+  window.on('closed', function() {
+    app.quit();
   });
 });
