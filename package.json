@@ -1,0 +1,14 @@
+{
+  "name": "Formulas",
+  "version": "1.0.0",
+  "description": "entering formulas",
+  "repository": "SBHACKS4",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron app.js"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^1.4.12"
+  }
+}
