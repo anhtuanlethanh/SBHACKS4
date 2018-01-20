@@ -43,6 +43,8 @@
 
       var viewedFormula = [];
 
+      var vars = [];
+
       function viewFormula() {
         var search = document.querySelector('#search').value;
         if (search.length != 0) {
@@ -52,8 +54,45 @@
           if (formula != null) {
             document.querySelector('#formula').value = formula[1];
             viewedFormula = formula;
+            var func = formula[1];
 
-            
+            //Scan through to identify VARIABLES
+            for (var i = 0; i < func.length; i) {
+              var operations = ["+", "-", "/", "*", "^", "(", ")"];
+              var specialOperators = ["sin", "cos", "tan", "asin", "atan", "acos"];
+              var c = func[i];
+              var start = i;
+              var end = func.length;
+
+              if (operations.indexOf(c) == -1 && isNaN(parseFloat(c))) {
+                for (var j = i + 1; j < func.length; j++) {
+                  if (! (operations.indexOf(func[j]) == -1 && isNaN(parseFloat(func[j])))) {
+                    end = j;
+                    break;
+                  }
+                }
+              }
+
+              var varName = func.substring(start, end);
+              //Check for special operators
+              if (specialOperators.indexOf(varName) == -1) {
+                vars.push([varName, null]);
+              }
+
+              i += end - start + 1;
+            }
+
+            //Splice out spaces
+            for (var k = 0; k < vars.length; k++) {
+              vars[k][0] = vars[k][0].replace(/\s/g, '');
+              if (vars[k][0].length == 0) {
+                vars.splice(k, 1);
+                k--;
+              }
+            }
+
+            //Create interface for entering variables
+
           } else {
             document.querySelector('#formula').value = "Not found!";
           }
@@ -66,7 +105,7 @@
       }
 
       function calculate() {
-        var output = ipcRenderer.sendSync('function:calc', viewedFormula[1], null);
+        var output = ipcRenderer.sendSync('function:calc', viewedFormula[1], vars);
         document.querySelector('#output').value = output;
       }
     </script>
