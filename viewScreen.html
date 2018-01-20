@@ -96,17 +96,17 @@
                 i--;
               }
             }
+            //Remove duplicates
+            for (var i = 0; i < vars.length; i++) {
+              for (var j = i+1; j < vars.length; j++) {
+                if (vars[i][0] == vars[j][0]) {
+                  vars.splice(j, 1);
+                  j--;
+                }
+              }
+            }
 
             //Create interface for entering variables
-            /*if (document.getElementById("holder") != null) {
-              document.getElementById("holder").innerHTML = '';
-            }*/
-            /*if (document.getElementById("varsDiv") != null) {
-              while (document.getElementById("varsDiv").firstChild) {
-                console.log("one removal");
-                document.getElementById("varsDiv").removeChild(document.getElementById("varsDiv").firstChild);
-              }
-            }*/
             while (document.getElementById("holder")) {
               document.getElementById("holder").remove();
             }
