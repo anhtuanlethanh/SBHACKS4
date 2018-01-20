@@ -12,7 +12,8 @@ function goToAddScreen(e) {
 
 const {ipcRenderer} = require('electron');
 
-function goToAddScreen(e) {
-  console.log("test");
-  ipcRenderer.send('screen:add');
+function goToAddScreen(scr) {
+  console.log("test "+scr);
+  ipcRenderer.send('screen:'+scr);
+  //ipcRenderer.send('screen:add');
 }

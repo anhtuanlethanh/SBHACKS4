@@ -4,8 +4,11 @@ const url = require('url');           // https://nodejs.org/api/url.html
 
 let window = null;
 
-ipcMain.on('screen:add', function(e, eventName, year) {
+ipcMain.on('screen:Add', function(e, eventName, year) {
   window.loadURL('file://' + __dirname + '/addScreen.html');
+});
+ipcMain.on('screen:View', function(e, eventName, year) {
+  window.loadURL('file://' + __dirname + '/viewScreen.html');
 });
 
 // Wait until the app is ready
