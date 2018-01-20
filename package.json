@@ -1,14 +1,19 @@
 {
-  "name": "Formulas",
+  "name": "formulas",
   "version": "1.0.0",
   "description": "entering formulas",
-  "repository": "SBHACKS4",
+  "repository": {
+    "type": "git",
+    "url": "SBHACKS4"
+  },
   "main": "app.js",
   "scripts": {
     "start": "electron app.js"
   },
   "license": "ISC",
   "devDependencies": {
-    "electron": "^1.4.12"
-  }
+    "electron": "^1.7.10"
+  },
+  "dependencies": {},
+  "author": "Tuan Le and Matthew Pontarolo"
 }
