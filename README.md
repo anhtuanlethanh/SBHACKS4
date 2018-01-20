@@ -9,6 +9,10 @@ Version 1.1: Flashcards
 - Open 2 different screens with one function (On the main window) (done)
 - Functions can be entered and saved into main window (done)
 - Recall saved functions and show it on View windows (to do)
+  List of Names:
+  - Today
+  - Yesterday
+  - Tomorrow
 
 Version 1.2: Cloud storage enables saved functions by a user
 
