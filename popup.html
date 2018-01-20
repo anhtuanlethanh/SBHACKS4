@@ -6,8 +6,18 @@
   </head>
   <body>
   	<h1 style="text-align:center;">Formulas</h1>
-  	<h2 id="AAF" style="text-align:center;">Add a formula</h2>
-  	<h2 style="text-align:center;">Your formulas</h2>
+    <div>
+      <button id="AF"
+              class="btn waves-effect waves-red"
+              type="button"
+              onclick="goToScreen('Add')">Add Formula</button>
+    </div>
+    <div>
+      <button id="YF"
+              class="btn waves-effect waves-red"
+              type="button"
+              onclick="goToScreen('View')">Your Formulas</button>
+    </div>
   	<style>
       body {
         overflow: hidden;
@@ -15,12 +25,15 @@
         padding: 30px;
         background: #33FAFF;
       }
+      #AF {
+        margin-top: 100px;
+        margin-left: 240px;
+      }
+      #YF {
+        margin-left: 231px;
+        margin-top: 50px;
+      }
   	</style>
-    <div>
-      <button class="btn waves-effect waves-red"
-              type="button"
-              onclick="goToAddScreen()">Add Formula</button>
-    </div>
 	</body>
   <script src="window.js"></script>
 </html>
