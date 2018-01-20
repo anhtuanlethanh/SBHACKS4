@@ -30,17 +30,18 @@
 
       const form = document.querySelector('form');
 
-      function submitFunction(e) {
+      function submitFunction() {
         const formulaName = document.querySelector('#formula_name').value;
         const func = document.querySelector('#func').value;
         if (formulaName.length != 0 && func.length != 0) {
+          console.log("test of formulaname : " + formulaName);
           ipcRenderer.send('function:add', formulaName, func);
           document.querySelector('#formula_name').value = "";
           document.querySelector('#func').value = "";
         }
       }
 
-      function done(e) {
+      function done() {
         ipcRenderer.send('screen:main');
         console.log('Done with the add screen');
       }

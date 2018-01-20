@@ -9,22 +9,50 @@
     <div class="container">
       <form>
         <div>
-          <label>Event Name</label>
-          <input type="text" id="event" autofocus>
-        </div>
-        <div>
-          <label>Date</label>
-          <input type="date" id="year" autofocus>
+          <label>Formula Index</label>
+          <input type="text" id="index" autofocus>
         </div>
         <button class="btn waves-effect waves-red"
                 type="button"
-                onclick="validSubmit()">Add Entry</button>
+                onclick="viewFormula()">View Formula</button>
         <button class="btn waves-effect waves-red"
                 type="button"
                 onclick="done()">Done</button>
+        <div>
+          <label>Formula Name</label>
+          <input type="text" id="fName">
+        </div>
+        <div>
+          <label>Formula</label>
+          <input type="text" id="formula">
+        </div>
       </form>
     </div>
 
-    <script></script>
+    <script>
+      const {ipcRenderer} = require('electron');
+
+      const form = document.querySelector('form');
+
+      function viewFormula() {
+        var index = document.querySelector('#index').value;
+        if (index.length != 0) {
+          index = parseInt(index);
+          console.log("some index was entered");
+          var formula = ["UNSET", "UNSET"];
+
+          formula = ipcRenderer.sendSync('function:get', index);
+          document.querySelector('#fName').value = formula[0];
+          document.querySelector('#formula').value = formula[1];
+
+          document.querySelector('#index').value = "";
+        }
+      }
+
+      function done() {
+        ipcRenderer.send('screen:main');
+        console.log('Done with the view screen');
+      }
+    </script>
   </body>
 </html>

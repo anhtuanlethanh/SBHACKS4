@@ -2,24 +2,24 @@ const {app, BrowserWindow, ipcMain} = require('electron'); // http://electron.at
 const path = require('path');         // https://nodejs.org/api/path.html
 const url = require('url');           // https://nodejs.org/api/url.html
 
-let window = null;
+let mainWindow = null;
 let bgWindow = null;
 
 
 ipcMain.on('screen:Add', function(e, eventName, year) {
-  window.loadURL('file://' + __dirname + '/addScreen.html');
+  mainWindow.loadURL('file://' + __dirname + '/addScreen.html');
 });
 ipcMain.on('screen:View', function(e, eventName, year) {
-  window.loadURL('file://' + __dirname + '/viewScreen.html');
+  mainWindow.loadURL('file://' + __dirname + '/viewScreen.html');
 });
 ipcMain.on('screen:main', function(e) {
-  window.loadURL('file://' + __dirname + '/popup.html');
+  mainWindow.loadURL('file://' + __dirname + '/popup.html');
 });
 
 // Wait until the app is ready
 app.once('ready', () => {
   // Create a new window
-  window = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 700,
     height: 500,
     // Don't show the window until it ready, this prevents any white flickering
@@ -29,15 +29,15 @@ app.once('ready', () => {
   });
 
   // Load a URL in the window to the local index.html path
-  window.loadURL(url.format({
+  mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'popup.html'),
     protocol: 'file:',
     slashes: true
   }));
 
   // Show window when page is ready
-  window.once('ready-to-show', () => {
-    window.show()
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show()
   });
 
   bgWindow = new BrowserWindow({
@@ -51,7 +51,7 @@ app.once('ready', () => {
     slashes: true
   }));
 
-  window.on('closed', function() {
+  mainWindow.on('closed', function() {
     app.quit();
   });
 });
@@ -59,8 +59,11 @@ app.once('ready', () => {
 
 
 //Functions handling
-var functions = [];
-ipcMain.on('function:add', function(e, functionName, func) {
-  console.log("function added");
-  functions.push([functionName, func]);
+var formulas = [];
+ipcMain.on('function:add', function(e, formulaName, func) {
+  formulas.push([formulaName, func]);
+});
+
+ipcMain.on('function:get', function(event, index) {
+  event.returnValue = formulas[index];
 });
