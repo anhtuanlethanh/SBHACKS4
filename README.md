@@ -1,25 +1,6 @@
 # SBHACKS4
 
-Functionality Goals:
-- Allow users to input formulas, providing a name and description
-- Allow users to access and edit previously entered forumlas
-- Allow entering of variables into formulas to be computed
-
-Version 1.1: Flashcards
-- Open 2 different screens with one function (On the main window) (done)
-- Functions can be entered and saved into main window
-- Recall saved functions and show it on View windows
-
-Version 1.2: Interpreting entered functions (done)
-
-Version 1.3: Local storage enables saved functions by a user (todo)
-
-
-
-
-DEMO FUNCS:
-- sin, arcsin Functions
-- duplicated VARIABLES
-- longer than one character variable (e.c Xo)
-- Test loading and clearing files
-- Ideal Gas Folder
+Ever took longer to find that math formula in your messy notebook than actually using it?
+The Formula(s) For Success gives you a way to enter your formulas, view them, and use them with as many as three clicks.
+You can also save files locally and keep all your entered formulas in a folder, then load them whenever you restart the application.
+Thank us later for your physics final ;)
