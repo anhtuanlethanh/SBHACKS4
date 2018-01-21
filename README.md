@@ -12,7 +12,7 @@ Version 1.1: Flashcards
 
 Version 1.2: Interpreting entered functions (done)
 
-Version 1.3: Cloud storage enables saved functions by a user (todo)
+Version 1.3: Local storage enables saved functions by a user (todo)
 
 
 
