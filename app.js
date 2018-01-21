@@ -294,7 +294,7 @@ function getOpCount(operations, formula) {
 const storage = require('electron-storage');
 
 ipcMain.on('recall:save', function(e, setName) {
-  deleteSet(e, setName);
+  //deleteSet(e, setName);
 
   for (var i = 0; i < formulas.length; i++) {
     var data = { 'name': formulas[i][0],
