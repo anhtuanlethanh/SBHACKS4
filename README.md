@@ -5,15 +5,19 @@ Functionality Goals:
 - Allow users to access and edit previously entered forumlas
 - Allow entering of variables into formulas to be computed
 
-Version 1.1: Flashcards 
+Version 1.1: Flashcards
 - Open 2 different screens with one function (On the main window) (done)
-- Functions can be entered and saved into main window (done)
-- Recall saved functions and show it on View windows (to do)
-  List of Names:
-  - Today
-  - Yesterday
-  - Tomorrow
+- Functions can be entered and saved into main window
+- Recall saved functions and show it on View windows
 
-Version 1.2: Cloud storage enables saved functions by a user
+Version 1.2: Interpreting entered functions (done)
 
-Version 1.3: Interpreting entered functions
+Version 1.3: Cloud storage enables saved functions by a user (todo)
+
+
+
+
+DEMO FUNCS:
+-sin, arcsin Functions
+-duplicated VARIABLES
+-longer than one character variable (e.c Xo)

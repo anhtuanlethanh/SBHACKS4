@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Save File</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <form>
+        <div>
+          <label>Input File Name</label>
+          <input type="text" id="fileName" autofocus>
+        </div>
+        <button class="btn waves-effect waves-red"
+                type="button"
+                onclick="done()">Done</button>
+      </form>
+    </div>
+    <script>
+      const {ipcRenderer} = require('electron');
+      function done() {
+      ipcRenderer.send('screen:main');
+      console.log('Done with the save screen');
+    }
+    </script>
+  </body>
+  </html>

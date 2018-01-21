@@ -5,7 +5,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
   </head>
   <body>
-  	<h1 style="text-align:center;">Formulas</h1>
+    <h5>The</h5>
+    <h1 style="text-align:center;">Formula(s)</h1>
+    <h5 style="text-align:center;">For Success</h5>
     <div>
       <button id="AF"
               class="btn waves-effect waves-red"
@@ -18,6 +20,18 @@
               type="button"
               onclick="goToScreen('View')">Your Formulas</button>
     </div>
+    <div>
+      <button id="SF"
+              class="btn waves-effect waves-red"
+              type="button"
+              onclick="goToScreen('Save')">Save File</button>
+    </div>
+    <div>
+      <button id="LF"
+              class="btn waves-effect waves-red"
+              type="button"
+              onclick="goToScreen('Load')">Load File</button>
+    </div>
   	<style>
       body {
         overflow: hidden;
@@ -26,14 +40,33 @@
         background: #33FAFF;
       }
       #AF {
-        margin-top: 100px;
+        margin-top: 20px;
         margin-left: 240px;
       }
       #YF {
         margin-left: 231px;
-        margin-top: 50px;
+        margin-top: 30px;
+      }
+      #SF {
+        margin-left: 257px;
+        margin-top: 30px;
+      }
+      #LF {
+        margin-left: 257px;
+        margin-top: 30px;
+        }
+      h5 {
+        text-align: center;
+        font-family: Georgia, serif;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      h1 {
+        font-family: "Brush Script MT", "Brush Script Std", cursive;
+        margin: auto;
       }
   	</style>
 	</body>
   <script src="window.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
 </html>
