@@ -70,7 +70,7 @@
               var start = i;
               var end = func.length;
 
-              if (operations.indexOf(c) == -1 && isNaN(parseFloat(c)) && c != ' ') {
+              if (operations.indexOf(c) == -1 && isNaN(parseFloat(c)) && c != ' ' && c != '.') {
                 for (var j = i + 1; j < func.length; j++) {
                   if (! (operations.indexOf(func[j]) == -1 && isNaN(parseFloat(func[j])))) {
                     end = j;
@@ -154,6 +154,7 @@
         var fName = document.querySelector('#search').value;
         ipcRenderer.send('function:delete', fName);
         document.querySelector('#formula').value = "Deleted!";
+        document.querySelector('#output').value = "";
         while (document.getElementById("holder")) {
           document.getElementById("holder").remove();
         }
