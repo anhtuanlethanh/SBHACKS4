@@ -329,7 +329,7 @@ ipcMain.on('recall:clear', function(e, setName) {
   clearSet(e, setName);
 });
 
-function deleteSet(e, setName) {
+function clearSet(e, setName) {
   var i = 0;
   while (i < 25) {
     var filePath = 'formulas/'+setName+'/func'+i+'.json';
