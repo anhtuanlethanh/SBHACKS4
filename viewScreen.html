@@ -70,7 +70,7 @@
               var start = i;
               var end = func.length;
 
-              if (operations.indexOf(c) == -1 && isNaN(parseFloat(c))) {
+              if (operations.indexOf(c) == -1 && isNaN(parseFloat(c)) && c != ' ') {
                 for (var j = i + 1; j < func.length; j++) {
                   if (! (operations.indexOf(func[j]) == -1 && isNaN(parseFloat(func[j])))) {
                     end = j;

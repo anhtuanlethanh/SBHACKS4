@@ -18,8 +18,8 @@ Version 1.3: Local storage enables saved functions by a user (todo)
 
 
 DEMO FUNCS:
--sin, arcsin Functions
--duplicated VARIABLES
--longer than one character variable (e.c Xo)
--Saving and loading files
-  -Combine filesx
+- sin, arcsin Functions
+- duplicated VARIABLES
+- longer than one character variable (e.c Xo)
+- Test loading and clearing files
+- Ideal Gas Folder
