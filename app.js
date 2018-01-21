@@ -56,9 +56,7 @@ app.once('ready', () => {
   });
 });
 
-
-
-//Functions handling
+//Formula handling
 var formulas = [];
 ipcMain.on('function:add', function(e, formulaName, func) {
   var duplicate = false;
@@ -72,6 +70,12 @@ ipcMain.on('function:add', function(e, formulaName, func) {
   } else {
     console.log("Duplicate formula name!");
   }
+
+
+  saveSet('firstTest');
+
+
+
 });
 
 ipcMain.on('function:get', function(event, search) {
@@ -81,6 +85,13 @@ ipcMain.on('function:get', function(event, search) {
     }
   }
   event.returnValue = null;
+
+
+
+
+
+  readSet('firstTest');
+
 });
 
 ipcMain.on('function:calc', function(event, formula, vars) {
@@ -272,4 +283,49 @@ function getOpCount(operations, formula) {
   }
 
   return opCount;
+}
+
+const storage = require('electron-storage');
+
+//saveSet("firstTest");
+//readSet("firstTest");
+
+function saveSet(setName) {
+  for (var i = 0; i < formulas.length; i++) {
+    var data = { 'name': formulas[i][0],
+                 'func': formulas[i][1] };
+    var filePath = 'formulas/'+setName+'/func'+i+'.json';
+    storage.set(filePath, data, (err) => {
+      if (err) {
+        console.error(err)
+      }
+    });
+  }
+}
+
+function readSet(setName) {
+  var i = 0;
+  while (i < 5) {
+    var index = i;
+    shouldBreak = false;
+    storage.isPathExists('formulas/'+setName+'/func'+index+'.json', (itDoes) => {
+      shouldBreak = !itDoes;
+      console.log('formulas/'+setName+'/func'+index+'.json exists? ' + itDoes);
+    });
+    if (shouldBreak) {
+      console.log("It should break?");
+      break;
+    }
+
+    var filePath = 'formulas/'+setName+'/func'+index+'.json';
+    storage.get(filePath, (err, data) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("data is : " + data.name);
+      }
+    });
+
+    i++;
+  }
 }
