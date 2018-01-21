@@ -21,6 +21,9 @@
         <button class="btn waves-effect waves-red"
                 type="button"
                 onclick="calculate()">Calculate</button>
+        <button class="btn waves-effect waves-red"
+                type="button"
+                onclick="delFunc()">Delete</button>
         <!--<div>
           <label>Formula Name</label>
           <input type="text" id="fName">
@@ -145,6 +148,16 @@
 
         var output = ipcRenderer.sendSync('function:calc', viewedFormula[1], vars);
         document.querySelector('#output').value = output;
+      }
+
+      function delFunc() {
+        var fName = document.querySelector('#search').value;
+        ipcRenderer.send('function:delete', fName);
+        document.querySelector('#formula').value = "Deleted!";
+        while (document.getElementById("holder")) {
+          document.getElementById("holder").remove();
+        }
+        console.log('Deleted');
       }
     </script>
   </body>

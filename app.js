@@ -1,75 +1,21 @@
-//DATA STORAGE
-
-//ACTUAL CODE
-
 const {app, BrowserWindow, ipcMain} = require('electron'); // http://electron.atom.io/docs/api
 const path = require('path');         // https://nodejs.org/api/path.html
 const url = require('url');           // https://nodejs.org/api/url.html
-/*var firebase = require("firebase");
-var config = {
-  apiKey: "AIzaSyA7Lbj4ActDSxtQgETdOMFzGX0J8i9vihU",
-  authDomain: "formulas-99bcc.firebaseapp.com",
-  databaseURL: "https://formulas-99bcc.firebaseio.com",
-  projectId: "formulas-99bcc",
-  storageBucket: "formulas-99bcc.appspot.com",
-  messagingSenderId: "485065954122"
-};
-firebase.initializeApp(config);
 
-var db = firebase.database();
-var ref = db.ref("server/saving-data/fireblog")
-var usersRef = ref.child("users");
-usersRef.set({
-  alanisawesome: {
-    date_of_birth: "June 23, 1912",
-    full_name: "Alan Turing"
-  },
-  gracehop: {
-    date_of_birth: "December 9, 1906",
-    full_name: "Grace Hopper"
-  }
-});
-*/
-//FIREBASE STORAGE
-/*const admin = require('firebase-admin');
-
-var serviceAccount = require("C:/Users/Tuan Le/Documents/ELECTRON/SBHACKS4/serviceAccountKey.json");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
-
-var db = admin.firestore();
-
-var docRef = db.collection('formulas').doc('formula1');
-
-var setFormula = docRef.set({
-    Name: 'Squares',
-    func: 'x^2 + y^2',
-});
-
-db.collection('formulas').get()
-    .then((snapshot) => {
-        snapshot.forEach((doc) => {
-            console.log(doc.id, '=>', doc.data());
-        });
-    })
-    .catch((err) => {
-        console.log('Error getting documents', err);
-    });
-*/
-// Imports the Google Cloud client library.
-ipcMain.on('screen:Add', function(e, eventName, year) {
+ipcMain.on('screen:Add', function(e) {
   mainWindow.loadURL('file://' + __dirname + '/addScreen.html');
 });
-ipcMain.on('screen:View', function(e, eventName, year) {
+ipcMain.on('screen:View', function(e) {
   mainWindow.loadURL('file://' + __dirname + '/viewScreen.html');
 });
-ipcMain.on('screen:Save', function(e, eventName, year) {
+ipcMain.on('screen:Save', function(e) {
   mainWindow.loadURL('file://' + __dirname + '/saveScreen.html');
 });
-ipcMain.on('screen:Load', function(e, eventName, year) {
+ipcMain.on('screen:Load', function(e) {
   mainWindow.loadURL('file://' + __dirname + '/loadScreen.html');
+});
+ipcMain.on('screen:Clear', function(e) {
+  mainWindow.loadURL('file://' + __dirname + '/clearScreen.html');
 });
 ipcMain.on('screen:main', function(e) {
   mainWindow.loadURL('file://' + __dirname + '/popup.html');
@@ -134,12 +80,6 @@ ipcMain.on('function:add', function(e, formulaName, func) {
   } else {
     console.log("Duplicate formula name!");
   }
-
-
-  saveSet('firstTest');
-
-
-
 });
 
 ipcMain.on('function:get', function(event, search) {
@@ -149,13 +89,15 @@ ipcMain.on('function:get', function(event, search) {
     }
   }
   event.returnValue = null;
+});
 
-
-
-
-
-  readSet('firstTest');
-
+ipcMain.on('function:delete', function(e, search) {
+  for (var i = 0; i < formulas.length; i++) {
+    if (formulas[i][0] == search) {
+      formulas.splice(i, 1);
+      break;
+    }
+  }
 });
 
 ipcMain.on('function:calc', function(event, formula, vars) {
@@ -351,10 +293,9 @@ function getOpCount(operations, formula) {
 
 const storage = require('electron-storage');
 
-//saveSet("firstTest");
-//readSet("firstTest");
+ipcMain.on('recall:save', function(e, setName) {
+  deleteSet(e, setName);
 
-function saveSet(setName) {
   for (var i = 0; i < formulas.length; i++) {
     var data = { 'name': formulas[i][0],
                  'func': formulas[i][1] };
@@ -365,28 +306,36 @@ function saveSet(setName) {
       }
     });
   }
-}
+});
 
-function readSet(setName) {
+ipcMain.on('recall:get', function(e, setName) {
   var i = 0;
-  while (i < 5) {
-    var index = i;
-    shouldBreak = false;
-    storage.isPathExists('formulas/'+setName+'/func'+index+'.json', (itDoes) => {
-      shouldBreak = !itDoes;
-      console.log('formulas/'+setName+'/func'+index+'.json exists? ' + itDoes);
-    });
-    if (shouldBreak) {
-      console.log("It should break?");
-      break;
-    }
-
-    var filePath = 'formulas/'+setName+'/func'+index+'.json';
+  while (i < 25) {
+    var filePath = 'formulas/'+setName+'/func'+i+'.json';
     storage.get(filePath, (err, data) => {
       if (err) {
         console.error(err);
       } else {
+        formulas.push([data.name, data.func]);
         console.log("data is : " + data.name);
+      }
+    });
+
+    i++;
+  }
+});
+
+ipcMain.on('recall:clear', function(e, setName) {
+  clearSet(e, setName);
+});
+
+function deleteSet(e, setName) {
+  var i = 0;
+  while (i < 25) {
+    var filePath = 'formulas/'+setName+'/func'+i+'.json';
+    storage.remove(filePath, err => {
+      if (err) {
+        console.log(err)
       }
     });
 

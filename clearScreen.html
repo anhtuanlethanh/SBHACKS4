@@ -2,14 +2,14 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Load File</title>
+    <title>Clear File</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
   </head>
   <body>
     <div class="container">
       <form>
         <div>
-          <label>Input File Name</label>
+          <label>Input File Name to be Cleared</label>
           <input type="text" id="fileName" autofocus>
         </div>
         <button class="btn waves-effect waves-red"
@@ -20,9 +20,9 @@
     <script>
       const {ipcRenderer} = require('electron');
       function done() {
-        ipcRenderer.send('recall:get', document.querySelector('#fileName').value );
+        ipcRenderer.send('recall:clear', document.querySelector('#fileName').value);
         ipcRenderer.send('screen:main');
-        console.log('Done with the save screen');
+        console.log('Done with the clear screen');
       }
     </script>
   </body>
