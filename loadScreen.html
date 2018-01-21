@@ -20,9 +20,13 @@
     <script>
       const {ipcRenderer} = require('electron');
       function done() {
-        ipcRenderer.send('recall:get', document.querySelector('#fileName').value);
-        ipcRenderer.send('screen:main');
-        console.log('Done with the save screen');
+        if (document.querySelector('#fileName').value.length != 0) {
+          ipcRenderer.send('recall:get', document.querySelector('#fileName').value);
+          ipcRenderer.send('screen:main');
+          console.log('Done with the save screen');
+        } else {
+          console.log('Enter something!');
+        }
       }
     </script>
   </body>

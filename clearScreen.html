@@ -20,9 +20,13 @@
     <script>
       const {ipcRenderer} = require('electron');
       function done() {
-        ipcRenderer.send('recall:clear', document.querySelector('#fileName').value);
-        ipcRenderer.send('screen:main');
-        console.log('Done with the clear screen');
+        if (document.querySelector('#fileName').value.length != 0) {
+          ipcRenderer.send('recall:clear', document.querySelector('#fileName').value);
+          ipcRenderer.send('screen:main');
+          console.log('Done with the clear screen');
+        } else {
+          console.log('Enter something!');
+        }
       }
     </script>
   </body>
