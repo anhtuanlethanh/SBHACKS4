@@ -304,18 +304,23 @@ function saveSet(setName) {
 }
 
 function readSet(setName) {
-  var i = 1;
-  while (true) {
-    storage.isPathExists('formulas/'+setName+'/func'+i+'.json', (itDoes) => {
-      if (itDoes) {
-        console.log('pathDoesExists !')
-      }
+  var i = 0;
+  while (i < 5) {
+    var index = i;
+    shouldBreak = false;
+    storage.isPathExists('formulas/'+setName+'/func'+index+'.json', (itDoes) => {
+      shouldBreak = !itDoes;
+      console.log('formulas/'+setName+'/func'+index+'.json exists? ' + itDoes);
     });
+    if (shouldBreak) {
+      console.log("It should break?");
+      break;
+    }
 
-    var filePath = 'formulas/'+setName+'/func'+i+'.json';
+    var filePath = 'formulas/'+setName+'/func'+index+'.json';
     storage.get(filePath, (err, data) => {
       if (err) {
-        console.error(err)
+        console.error(err);
       } else {
         console.log("data is : " + data.name);
       }
